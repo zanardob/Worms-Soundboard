@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Worms Soundboard</string>
+    <string name="button_attack">\tAtacar!</string>
+    <string name="button_catch_this">\tPega essa!</string>
+    <string name="button_coward">\tCovarde!</string>
+    <string name="button_did_you_see">\tViu só?</string>
+</resources>
