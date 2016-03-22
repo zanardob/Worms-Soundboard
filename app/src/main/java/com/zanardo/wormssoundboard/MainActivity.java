@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -18,29 +17,49 @@ import java.util.HashMap;
 
 public class MainActivity extends Activity {
     private SoundPool soundPool = null;
-    private SoundAdapter mAdapter = null;
-    private ArrayList<Sound> mSounds = null;
-    private HashMap<Integer, Integer> mSoundPoolMap = null;
+    private SoundList mSoundList = null;
+    private HashMap<Sound, Integer> mSoundPoolMap = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Creates the SoundPool and the map of Ids
-        AudioAttributes attributes = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
-        soundPool = new SoundPool.Builder().setAudioAttributes(attributes).build();
-        mSoundPoolMap = new HashMap<>();
-
         // Adds all the sounds to the sound list
-        mSounds = new ArrayList<>();
-        addSound(mSounds, "attack");
-        addSound(mSounds, "catch_this");
-        addSound(mSounds, "coward");
-        addSound(mSounds, "did_you_see");
-
+        mSoundList = new SoundList(getApplicationContext());
+        mSoundList.add("attack");
+        mSoundList.add("catch_this");
+        mSoundList.add("coward");
+        mSoundList.add("did_you_see");
+        mSoundList.add("dumb");
+        mSoundList.add("fire");
+        mSoundList.add("go_away");
+        mSoundList.add("goodbye");
+        mSoundList.add("grenade");
+        mSoundList.add("hello");
+        mSoundList.add("hide_yourselves");
+        mSoundList.add("i_am_awesome");
+        mSoundList.add("i_did_it");
+        mSoundList.add("idiot");
+        mSoundList.add("incredible");
+        mSoundList.add("kamikaze");
+        mSoundList.add("leave_me_alone");
+        mSoundList.add("mayday");
+        mSoundList.add("no_problems");
+        mSoundList.add("quick");
+        mSoundList.add("run");
+        mSoundList.add("shocking");
+        mSoundList.add("take_it");
+        mSoundList.add("thank_god");
+        mSoundList.add("the_first_of_many");
+        mSoundList.add("there_it_goes");
+        mSoundList.add("this_sucks");
+        mSoundList.add("weapons");
+        mSoundList.add("yes_sir");
+        mSoundList.add("you_missed");
+        
         // Creates the adapter for the GridView and populates it
-        mAdapter = new SoundAdapter(this, R.id.grid_item_button, mSounds);
+        SoundAdapter mAdapter = new SoundAdapter(this, R.id.grid_item_button, mSoundList);
         GridView gridView = (GridView) findViewById(R.id.gridview);
         gridView.setAdapter(mAdapter);
     }
@@ -48,20 +67,22 @@ public class MainActivity extends Activity {
     @Override
     public void onResume(){
         super.onResume();
-        soundPool.autoResume();
+
+        AudioAttributes attributes = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
+        soundPool = new SoundPool.Builder().setAudioAttributes(attributes).build();
+        mSoundPoolMap = new HashMap<>();
+        loadSounds();
     }
 
     @Override
     public void onPause(){
         super.onPause();
-        soundPool.autoPause();
-    }
 
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
         soundPool.release();
         soundPool = null;
+
+        mSoundPoolMap.clear();
+        mSoundPoolMap = null;
     }
 
     public void playSound(View v) {
@@ -75,18 +96,16 @@ public class MainActivity extends Activity {
         float playbackRate = 1f;
 
         // Grabs the sound based on the position of the button
-        Sound sound = mSounds.get(v.getId());
+        Sound sound = mSoundList.get(v.getId());
 
-        // Plays the sound based on the map that links Position <-> soundPoolId
-        soundPool.play(mSoundPoolMap.get(sound.getSoundResourceId()), leftVolume, rightVolume, priority, loop, playbackRate);
+        // Plays the sound based on the map that links Sound <-> soundPoolId
+        soundPool.play(mSoundPoolMap.get(sound), leftVolume, rightVolume, priority, loop, playbackRate);
     }
 
-    private void addSound(ArrayList<Sound> sounds, String root){
-        String btnText = getString(getResources().getIdentifier("button_" + root, "string", getPackageName()));
-        int soundId = getResources().getIdentifier(root, "raw", getPackageName());
-        int iconId = getResources().getIdentifier(root, "drawable", getPackageName());
-
-        mSoundPoolMap.put(soundId, soundPool.load(this, soundId, 1));
-        sounds.add(new Sound(btnText, soundId, iconId));
+    // Load all the sounds into the SoundPool
+    private void loadSounds(){
+        for(Sound s : mSoundList){
+            mSoundPoolMap.put(s, soundPool.load(this, s.getSoundResourceId(), 1));
+        }
     }
 }
