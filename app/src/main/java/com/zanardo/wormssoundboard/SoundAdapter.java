@@ -1,17 +1,11 @@
 package com.zanardo.wormssoundboard;
 
 import android.content.Context;
-import android.media.MediaPlayer;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -43,7 +37,7 @@ public class SoundAdapter extends ArrayAdapter<Sound> {
         if(sound != null){
             Button btnSound = (Button) gridView.findViewById(R.id.grid_item_button);
 
-            if(btnSound != null) {
+            if(btnSound != null){
                 btnSound.setId(position);
                 btnSound.setText(sound.getText());
                 btnSound.setCompoundDrawablesWithIntrinsicBounds(sound.getIconResourceId(), 0, 0, 0);
