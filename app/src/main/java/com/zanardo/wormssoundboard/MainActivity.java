@@ -38,18 +38,6 @@ public class MainActivity extends Activity {
         GridView gridView = (GridView) findViewById(R.id.gridview);
         gridView.setAdapter(mAdapter);
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("GridItem", "Button on position " + position + " was pressed!");
-
-                Sound sound = mSounds.get(position);
-
-                MediaPlayer mp = MediaPlayer.create(view.getContext(), sound.getSoundResourceId());
-                mp.start();
-            }
-        });
-
         AudioAttributes attributes = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
         soundPool = new SoundPool.Builder().setAudioAttributes(attributes).build();
     }
@@ -72,17 +60,16 @@ public class MainActivity extends Activity {
         soundPool.release();
         soundPool = null;
     }
-/**
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.i("GridItem", "Button on position " + position + " was pressed!");
 
-        Sound sound = mSounds.get(position);
+    public void playSound(View v) {
+        Log.i("GridItem", "Button on position " + v.getId() + " was pressed!");
+
+        Sound sound = mSounds.get(v.getId());
 
         MediaPlayer mp = MediaPlayer.create(this, sound.getSoundResourceId());
         mp.start();
     }
-*/
+
     private void addSound(ArrayList<Sound> sounds, String root){
         String btnText = getString(getResources().getIdentifier("button_" + root, "string", getPackageName()));
         int soundId = getResources().getIdentifier(root, "raw", getPackageName());

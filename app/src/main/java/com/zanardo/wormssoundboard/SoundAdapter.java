@@ -30,7 +30,7 @@ public class SoundAdapter extends ArrayAdapter<Sound> {
     }
 
     @Override
-    public View getView(final int position, View convertView, final ViewGroup parent){
+    public View getView(int position, View convertView, ViewGroup parent){
         View gridView = convertView;
 
         if(gridView == null){
@@ -41,9 +41,13 @@ public class SoundAdapter extends ArrayAdapter<Sound> {
         Sound sound = items.get(position);
 
         if(sound != null){
-            final TextView btnSound = (TextView) gridView.findViewById(R.id.grid_item_button);
-            btnSound.setText(sound.getText());
-            btnSound.setCompoundDrawablesWithIntrinsicBounds(sound.getIconResourceId(), 0, 0, 0);
+            Button btnSound = (Button) gridView.findViewById(R.id.grid_item_button);
+
+            if(btnSound != null) {
+                btnSound.setId(position);
+                btnSound.setText(sound.getText());
+                btnSound.setCompoundDrawablesWithIntrinsicBounds(sound.getIconResourceId(), 0, 0, 0);
+            }
         }
 
         return gridView;

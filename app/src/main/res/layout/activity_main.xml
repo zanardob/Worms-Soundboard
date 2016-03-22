@@ -10,6 +10,8 @@
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusable="false"
+        android:clickable="false"
         android:horizontalSpacing="@dimen/activity_horizontal_margin"
         android:verticalSpacing="5dp"
         android:gravity="top"
