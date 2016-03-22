@@ -1,58 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:weightSum="2"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.zanardo.wormssoundboard.MainActivity">
+    android:layout_width="match_parent">
 
     <LinearLayout
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.zanardo.wormssoundboard.MainActivity">
 
-                            <!-- 48dp vertical para 1 linha -->
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/button_attack"
-            android:textAlignment="viewStart"
-            android:drawableStart="@drawable/attack"
-            android:id="@+id/button_attack" />
+                                <!-- 48dp vertical para 1 linha -->
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/button_catch_this"
-            android:textAlignment="viewStart"
-            android:id="@+id/button_catch_this" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_attack"
+                android:textAlignment="viewStart"
+                android:drawableStart="@drawable/attack"
+                android:id="@+id/button_attack" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_catch_this"
+                android:textAlignment="viewStart"
+                android:drawableStart="@drawable/catch_this"
+                android:id="@+id/button_catch_this" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_coward"
+                android:textAlignment="viewStart"
+                android:drawableStart="@drawable/coward"
+                android:id="@+id/button_coward" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_did_you_see"
+                android:textAlignment="viewStart"
+                android:drawableStart="@drawable/did_you_see"
+                android:id="@+id/button_did_you_see" />
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/button_coward"
-            android:textAlignment="viewStart"
-            android:id="@+id/button_coward" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/button_did_you_see"
-            android:textAlignment="viewStart"
-            android:id="@+id/button_did_you_see" />
-    </LinearLayout>
-</LinearLayout>
+</ScrollView>
