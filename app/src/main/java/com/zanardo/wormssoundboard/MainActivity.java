@@ -57,7 +57,12 @@ public class MainActivity extends Activity {
         mSoundList.add("weapons");
         mSoundList.add("yes_sir");
         mSoundList.add("you_missed");
-        
+
+        AudioAttributes attributes = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
+        soundPool = new SoundPool.Builder().setAudioAttributes(attributes).build();
+        mSoundPoolMap = new HashMap<>();
+        loadSounds();
+
         // Creates the adapter for the GridView and populates it
         SoundAdapter mAdapter = new SoundAdapter(this, R.id.grid_item_button, mSoundList);
         GridView gridView = (GridView) findViewById(R.id.gridview);
@@ -65,24 +70,33 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    public void onResume(){
-        super.onResume();
-
-        AudioAttributes attributes = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
-        soundPool = new SoundPool.Builder().setAudioAttributes(attributes).build();
-        mSoundPoolMap = new HashMap<>();
-        loadSounds();
+    public void onPause(){
+        super.onPause();
+        soundPool.autoPause();
     }
 
     @Override
-    public void onPause(){
-        super.onPause();
+    public void onResume(){
+        super.onResume();
+        soundPool.autoResume();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
 
         soundPool.release();
         soundPool = null;
 
         mSoundPoolMap.clear();
         mSoundPoolMap = null;
+    }
+
+    // Load all the sounds into the SoundPool
+    private void loadSounds(){
+        for(Sound s : mSoundList){
+            mSoundPoolMap.put(s, soundPool.load(this, s.getSoundResourceId(), 1));
+        }
     }
 
     public void playSound(View v) {
@@ -100,12 +114,5 @@ public class MainActivity extends Activity {
 
         // Plays the sound based on the map that links Sound <-> soundPoolId
         soundPool.play(mSoundPoolMap.get(sound), leftVolume, rightVolume, priority, loop, playbackRate);
-    }
-
-    // Load all the sounds into the SoundPool
-    private void loadSounds(){
-        for(Sound s : mSoundList){
-            mSoundPoolMap.put(s, soundPool.load(this, s.getSoundResourceId(), 1));
-        }
     }
 }
